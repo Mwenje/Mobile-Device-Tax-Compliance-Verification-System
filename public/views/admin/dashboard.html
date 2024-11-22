@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/public/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+      <a href="#"><i class="fas fa-store"></i>Add Retailer</a>
+      <a href="#"><i class="fas fa-barcode"></i>Pending Verifications</a>
+
+      <a href="#"><i class="fas fa-user-shield"></i>Settings</a>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Dashboard</h1>
+        <div>
+          <span>Welcome Admin |</span>
+          <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Total Declarations</h3>
+          <p>10 Declared Devices</p>
+        </div>
+
+        <div class="card">
+          <h3>Total Retailers</h3>
+          <p>10</p>
+        </div>
+
+        <div class="card">
+          <h3>Total IMEI</h3>
+          <p>50</p>
+        </div>
+
+        <div class="card">
+          <h3>Pending IMEI Verifications</h3>
+          <p>5</p>
+        </div>
+      </div>
+
+      <div class="table-head">
+        <h1>Declarations</h1>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>IMEI</th>
+            <th>Model</th>
+            <th>Retailer</th>
+            <th>Serial Number</th>
+            <th>Amount Sold</th>
+            <th>Warranty Period</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>356789101234567</td>
+            <td>Galaxy S21</td>
+            <td>Anytime</td>
+            <td>SN12345678</td>
+            <td>KES. 50</td>
+            <td>24 Months</td>
+            <td>Active</td>
+            <td class="actions">
+              <a href="#">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>352590101567890</td>
+            <td>iPhone 13</td>
+            <td>Anytime</td>
+            <td>SN87654321</td>
+            <td>KES. 120</td>
+            <td>12 Months</td>
+            <td>Active</td>
+            <td class="actions">
+              <a href="#">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>359123101345678</td>
+            <td>Pixel 6</td>
+            <td>Anytime</td>
+            <td>SN23456789</td>
+            <td>KES. 30</td>
+            <td>18 Months</td>
+            <td>Active</td>
+            <td class="actions">
+              <a href="#">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-head">
+        <h1>Retailers</h1>
+        <div class="search">
+          <div class="search-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search Retailer"
+            />
+          </div>
+
+          <div class="add-btn">
+            <button class="btn btn-add-new">
+              <i class="fas fa-plus"></i> Add New
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Retailer Name</th>
+            <th>Email</th>
+            <th>PIN Number</th>
+            <th>Phone Number</th>
+            <th>Registration Date</th>
+            <th>County</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Anytime</td>
+            <td>anytime@gmail.com</td>
+            <td>P123456789Z</td>
+            <td>+254123456789</td>
+            <td>2024/11/12</td>
+            <td>Nairobi</td>
+            <td class="actions">
+              <a href="#">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Anytime</td>
+            <td>anytime@gmail.com</td>
+            <td>P123456789Z</td>
+            <td>+254123456789</td>
+            <td>2024/11/12</td>
+            <td>Nairobi</td>
+            <td class="actions">
+              <a href="#">Edit</a>
+              <a href="#">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">© IMEIChecker 2024</div>
+  </body>
+</html>

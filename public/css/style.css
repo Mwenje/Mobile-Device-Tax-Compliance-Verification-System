@@ -1,0 +1,403 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #007bff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+main {
+  padding-top: 10px;
+}
+
+.logo p {
+  position: relative;
+  width: 100%;
+  font-size: 28.4px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.logo p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 65px;
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.navbar ul li {
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.navbar a:hover {
+  color: #ffcc00;
+}
+
+#hamburger-menu {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  padding: 90px 20px 50px;
+  margin: auto;
+  background-color: #ffffff;
+  max-width: 1200px;
+  margin-top: 15px;
+}
+
+.main .content {
+  max-width: 600px;
+}
+
+.main .content h1 {
+  color: #007bff;
+  font-size: 24px;
+}
+
+.main .content h2 {
+  color: #343a40;
+  font-size: 32px;
+}
+
+.main .content p {
+  text-align: justify;
+  margin-top: 15px;
+}
+/* Input Field Styles */
+.main .content input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.main .content input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Button Style */
+.main .content input[type="button"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.main .content input[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* Error Message */
+.main .content .error {
+  color: red;
+  margin: 10px 0;
+  display: none; /* Hidden by default */
+}
+
+.spinner {
+  display: none; /* Hidden by default */
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main .content p {
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* Image Section */
+.main .image {
+  max-width: 500px;
+}
+
+.main .image img {
+  width: 100%;
+}
+
+/* Footer */
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer .column {
+  max-width: 450px;
+  margin: auto;
+}
+
+.footer .column h3 {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.footer .column p {
+  color: #adb5bd;
+  margin: 5px 0;
+}
+
+.footer .social-links a {
+  color: white;
+  margin: 0 10px;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.footer .social-links a:hover {
+  color: #ffcc00;
+}
+
+.footer .bottom {
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+.loginmodal-container {
+  padding: 30px;
+  max-width: 350px;
+  width: 100%;
+  background-color: #f7f7f7;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Poppins", sans-serif;
+}
+
+.loginmodal-container h1 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.loginmodal-container input[type="submit"] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  background-color: #4d90fe;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginmodal-container input[type="email"],
+.loginmodal-container input[type="password"] {
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 15px;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
+
+.loginmodal-container input[type="email"]:hover,
+.loginmodal-container input[type="password"]:hover {
+  border-color: #b9b9b9;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.loginmodal-container input[type="email"]:focus,
+.loginmodal-container input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.loginmodal-submit {
+  background-color: #4d90fe;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  padding: 15px 0;
+  transition: background-color 0.3s ease;
+}
+
+.loginmodal-submit:hover {
+  background-color: #357ae8;
+}
+
+.loginmodal-container a {
+  text-decoration: none;
+  color: #666;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
+}
+
+.loginmodal-container a:hover {
+  opacity: 1;
+}
+
+.login-help {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-btn {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: none; /* Hidden by default */
+  z-index: 10; /* Higher than other content */
+}
+
+/* Modal Positioning */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20; /* Above the overlay */
+  display: none; /* Hidden by default */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .logo p {
+    position: relative;
+    width: 100%;
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #007bff;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    display: none; /* Hidden initially */
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  #hamburger-menu {
+    display: block;
+  }
+
+  .navbar {
+    display: flex;
+  }
+  .main {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .header nav a {
+    font-size: 14px;
+    margin: 0 8px;
+  }
+
+  .main .content {
+    max-width: 100%;
+    margin-top: 110px;
+  }
+  .main .content h2 {
+    font-size: 24px;
+  }
+
+  .main .image {
+    max-width: 100%;
+    margin-top: 15px;
+  }
+}

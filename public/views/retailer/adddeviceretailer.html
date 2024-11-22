@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Device</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/public/css/dashboard.css" />
+    <link rel="stylesheet" href="/public/css/addretailer.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+      <a href="#"><i class="fas fa-barcode"></i>Pending Verifications</a>
+
+      <a href="#"><i class="fas fa-user-shield"></i>Settings</a>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Device Declaration</h1>
+        <div>
+          <span>Welcome Retailer |</span>
+          <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Registration Form -->
+        <form
+          class="form-container"
+          id="register"
+          action="/register"
+          method="POST"
+          onsubmit="return validateRegistrationForm()"
+          aria-label="Retailer registration form"
+        >
+          <h2>Device Declaration</h2>
+          <div class="form-group">
+            <label for="imei-number">IMEI Number:</label>
+            <input
+              type="number"
+              id="imei-number"
+              name="imei-number"
+              placeholder="Enter IMEI number"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="model">Model:</label>
+            <input
+              type="text"
+              id="model"
+              name="model"
+              placeholder="Enter mobile model"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="serial-number">Serial Number</label>
+            <input
+              type="text"
+              id="serial-number"
+              name="serial-number"
+              placeholder="Enter serial number"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="amount-sold">Amount Sold</label>
+            <input
+              type="number"
+              id="amount-sold"
+              name="amount-sold"
+              placeholder="Enter amount sold"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="control-unit-invoice-number"
+              >Control Unit Invoice Number</label
+            >
+            <input
+              type="text"
+              id="control-unit-invoice-number"
+              name="control-unit-invoice-number"
+              placeholder="Enter control unit invoice number"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="warranty">Warranty</label>
+            <input
+              type="text"
+              id="warranty"
+              name="warranty"
+              placeholder="12 months"
+              value="12 months"
+              readonly
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="responsible-warranty">Responsible for Warranty</label>
+            <select
+              id="responsible-warranty"
+              name="responsible-warranty"
+              required
+            >
+              <option value="">Responsible for Warranty</option>
+              <option value="retailer">Retailer</option>
+              <option value="manufacturer">Manufacturer</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Declare</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">© IMEIChecker 2024</div>
+  </body>
+</html>

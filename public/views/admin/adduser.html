@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/public/css/dashboard.css" />
+    <link rel="stylesheet" href="/public/css/addretailer.css" />
+    <title>Add User</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+      <a href="#"><i class="fas fa-store"></i>Add Retailer</a>
+      <a href="#"><i class="fas fa-barcode"></i>Pending Verifications</a>
+
+      <a href="#"><i class="fas fa-user-shield"></i>Settings</a>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Add User</h1>
+        <div>
+          <span>Welcome Admin |</span>
+          <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Registration Form -->
+        <form
+          class="form-container"
+          id="register"
+          action="/register"
+          method="POST"
+          onsubmit="return validateRegistrationForm()"
+          aria-label="Retailer registration form"
+        >
+          <h2>Add User</h2>
+          <div class="form-group">
+            <label for="retailer-pin">Username:</label>
+            <input
+              id="retailer-pin"
+              name="retailer-pin"
+              type="text"
+              required
+              pattern="\d{6}"
+              title="Retailer PIN should be a 6-digit number"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-email">Email:</label>
+            <input id="reg-email" name="reg-email" type="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+              <option value="#" default>Select Role</option>
+              <option value="moderator">Moderator</option>
+              <option value="superadmin">Superadmin</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+              <option value="#" default>Status</option>
+              <option value="inactive">Inactive</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Password:</label>
+            <input
+              id="reg-password"
+              name="reg-password"
+              type="password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirm Password:</label>
+            <input
+              id="reg-confirm-password"
+              name="reg-confirm-password"
+              type="password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Add User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">© IMEIChecker 2024</div>
+  </body>
+</html>
