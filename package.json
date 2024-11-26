@@ -1,0 +1,22 @@
+{
+  "name": "mobile-device-tax-compliance-verification-system",
+  "version": "1.0.0",
+  "description": "The Mobile-Device-Tax-Compliance-Verification-System is a web application designed to streamline the process of phone IMEI verification and declaration for retailers. The system provides retailers a platform to register, declare phone details, and u verify IMEIs making sure they are staying compliant with tax laws by verifying device authenticity. This system aims to provide a reliable and convenient way to verify the tax status of mobile devices, safeguarding both consumers and government interests. It also includes an admin dashboard to oversee retailer activities, manage accounts, and ensure compliance.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "mysql2": "^3.11.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

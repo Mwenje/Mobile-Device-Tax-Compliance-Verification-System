@@ -49,6 +49,8 @@
           <h1>Login to Your Account</h1>
           <br />
           <form>
+            <span id="error-message" style="color: red"></span>
+            <span id="success" style="color: green"></span>
             <input type="email" name="user" placeholder="Email" required />
             <input
               type="password"
@@ -88,6 +90,7 @@
         />
         <div class="spinner" id="spinner" style="display: none"></div>
         <div class="error" id="error" style="display: none">Invalid IMEI</div>
+        <!-- <div class="success" id="success" style="display: none">Invalid IMEI</div> -->
 
         <p>
           A simple, secure, and reliable way to track and declare IMEI numbers
