@@ -1,11 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
-const session = require("express-session");
 
 const retailerRoutes = require("./routes/retailerRoutes");
 
-const { retailerAuth } = require("./middlewares/auth");
+// const { retailerAuth } = require("./middlewares/auth");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -17,16 +16,6 @@ const app = express();
 // Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    secret: process.env.MY_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-    maxAge: 1000 * 60 * 60,
-  })
-);
 
 // Serve static files from 'public' directory
 app.use(express.static(path.join(__dirname, "public")));

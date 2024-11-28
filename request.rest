@@ -1,0 +1,23 @@
+POST http://localhost:3000/api/v1/retailer/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "securepassword@123"
+}
+
+###
+PUT http://localhost:3000/api/v1/retailer/profile
+Authorization: Bearer 1bbb86384ea0a25f97ecf5bbc82ec3cbccc2a2802791e099c240cefaf38dc5f1
+Content-Type: application/json
+
+{
+  "name": "John Doe1",
+  "county": "Kisumu",
+  "building": "City Center",
+  "phone": "0702345678"
+}
+
+###
+POST http://localhost:3000/api/v1/retailer/logout
+Authorization: Bearer 1bbb86384ea0a25f97ecf5bbc82ec3cbccc2a2802791e099c240cefaf38dc5f1

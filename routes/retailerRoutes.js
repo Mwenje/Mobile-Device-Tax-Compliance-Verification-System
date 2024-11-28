@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/register", retailerController.register);
 router.post("/login", retailerController.login);
+
 router.put(
   "/profile",
   authMiddleware.retailerAuth,

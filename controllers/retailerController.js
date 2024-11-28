@@ -1,5 +1,7 @@
+const sessionModel = require("../models/sessionModel");
 const bycrypt = require("bcryptjs");
 const retailerModel = require("../models/retailerModel");
+
 // const jwt = require("jsonwebtoken");
 
 const retailerControler = {
@@ -99,20 +101,24 @@ const retailerControler = {
       }
 
       // session or token not yet decided REMENMBER(for future use in protected routes)
-      req.session.retailer = {
-        id: retailer.retailer_id,
-        name: retailer.name,
-        email: retailer.email,
-      };
+      // req.session.retailer = {
+      //   id: retailer.retailer_id,
+      //   name: retailer.name,
+      //   email: retailer.email,
+      // };
 
       // session expiration time
-      req.session.cookie.expires = new Date(Date.now() + 3600000); // for 1 hour
+      // req.session.cookie.expires = new Date(Date.now() + 3600000); // for 1 hour
+      const sessionToken = await sessionModel.createSession(
+        retailer.retailer_id
+      );
 
       res.status(200).json({
         message: "Login successful.",
         retailer_id: retailer.retailer_id,
         name: retailer.name,
         email: retailer.email,
+        sessionToken: sessionToken,
       });
     } catch (error) {
       console.error("Error logging in:", error);
@@ -125,27 +131,45 @@ const retailerControler = {
 
   updateProfile: async (req, res) => {
     const { name, county, building, phone } = req.body;
-    const retailerId = req.session.retailer?.id;
 
-    if (!retailerId) {
-      return res.status(401).json({ message: "Unauthorized. Please log in." });
-    }
+    console.log(name, county, building, phone);
 
-    if (!name || !county || !building || !phone) {
-      return res.status(400).json({
-        message: "All fields are required (name, county, building, phone).",
-      });
-    }
+    // const retailerId = req.session.retailer?.id;
 
-    const phoneRegex = /^(?:\+254|07)\d{8}$/;
-    if (!phoneRegex.test(phone)) {
-      return res.status(400).json({
-        message:
-          "Invalid phone number format. Please use the format: +2547xxxxxxx.",
-      });
+    // console.log(retailerId);
+    const sessionToken = req.headers["authorization"]?.split(" ")[1];
+
+    if (!sessionToken) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. No session token provided." });
     }
 
     try {
+      const sessionData = await sessionModel.getSession(sessionToken);
+
+      if (!sessionData) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized. Invalid or expired session token." });
+      }
+
+      const retailerId = sessionData.retailer_id;
+
+      if (!name || !county || !building || !phone) {
+        return res.status(400).json({
+          message: "All fields are required (name, county, building, phone).",
+        });
+      }
+
+      const phoneRegex = /^(?:\+254|07)\d{8}$/;
+      if (!phoneRegex.test(phone)) {
+        return res.status(400).json({
+          message:
+            "Invalid phone number format. Please use the format: +2547xxxxxxx.",
+        });
+      }
+
       await retailerModel.updateRetailerProfile(
         retailerId,
         name,
@@ -164,19 +188,45 @@ const retailerControler = {
   },
 
   logout: async (req, res) => {
-    req.session.retailer = null;
+    // req.session.retailer = null;
+    // req.session.destroy((err) => {
+    //   if (err) {
+    //     console.error("Error destroying session:", err);
+    //     return res
+    //       .status(500)
+    //       .json({ message: "Error logging out. Please try again later." });
+    //   }
+    //   res.status(200).json({ message: "Logout successful." });
+    //   //   return res.redirect("/public/index.html");
+    // });
+    const authorizationHeader = req.headers["authorization"];
 
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error destroying session:", err);
+    if (!authorizationHeader) {
+      return res.status(400).json({ message: "No session token provided." });
+    }
+
+    const sessionToken = authorizationHeader.split(" ")[1]; // Bearer Token
+
+    if (!sessionToken) {
+      return res.status(400).json({
+        message: "Session token is missing in Authorization header.",
+      });
+    }
+
+    try {
+      const result = await sessionModel.deleteSession(sessionToken);
+
+      if (result) {
+        return res.status(200).json({ message: "Logout successful." });
+      } else {
         return res
-          .status(500)
-          .json({ message: "Error logging out. Please try again later." });
+          .status(404)
+          .json({ message: "Session not found or already expired." });
       }
-
-      res.status(200).json({ message: "Logout successful." });
-      res.redirect("/login");
-    });
+    } catch (error) {
+      console.error("Error logging out:", err);
+      return res.status(500).json({ message: "Internal server error." });
+    }
   },
 };
 
