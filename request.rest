@@ -1,3 +1,4 @@
+####retailer requests
 POST http://localhost:3000/api/v1/retailer/login
 Content-Type: application/json
 
@@ -8,16 +9,54 @@ Content-Type: application/json
 
 ###
 PUT http://localhost:3000/api/v1/retailer/profile
-Authorization: Bearer 1bbb86384ea0a25f97ecf5bbc82ec3cbccc2a2802791e099c240cefaf38dc5f1
+Authorization: Bearer 4481090a1a693b4705e4af0e9fe1ccdd39bb64a9b1f03cd3d31b4c4e8dd64dc2
 Content-Type: application/json
 
 {
   "name": "John Doe1",
   "county": "Kisumu",
+  "email": "techworld@example.com",
   "building": "City Center",
   "phone": "0702345678"
 }
 
 ###
 POST http://localhost:3000/api/v1/retailer/logout
-Authorization: Bearer 1bbb86384ea0a25f97ecf5bbc82ec3cbccc2a2802791e099c240cefaf38dc5f1
+Authorization: Bearer e0ec53353d5e3ec064e29188a3dbc86d80026a963ee459bde69a07ced8eef54d
+
+
+####admin requests
+POST http://localhost:3000/api/v1/admin/login
+Content-Type: application/json
+
+{
+  "email": "techworld@example.com",
+  "password": "securepassword@123"
+}
+
+###
+GET http://localhost:3000/api/v1/retailer/allretailers
+
+###
+POST http://localhost:3000/api/v1/admin/create
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "techworld@example.com",
+  "password": "securepassword@123"
+}
+
+###
+PUT http://localhost:3000/api/v1/admin/profile
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "techworld@example.com",
+  "newpassword": "securepassword@123"
+}
+
+###
+DELETE http://localhost:3000/api/v1/admin//delete/3
+Content-Type: application/json

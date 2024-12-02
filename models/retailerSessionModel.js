@@ -1,4 +1,3 @@
-const { warn } = require("console");
 const pool = require("../config/db");
 const crypto = require("crypto");
 
@@ -6,7 +5,7 @@ const generateSessionToken = () => {
   return crypto.randomBytes(32).toString("hex");
 };
 
-const sessionModel = {
+const retailerSessionModel = {
   createSession: async (retailerId) => {
     const sessionToken = generateSessionToken();
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); //in 1day
@@ -101,4 +100,4 @@ const sessionModel = {
   },
 };
 
-module.exports = sessionModel;
+module.exports = retailerSessionModel;

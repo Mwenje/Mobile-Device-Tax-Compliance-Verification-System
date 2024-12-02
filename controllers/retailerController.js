@@ -1,4 +1,4 @@
-const sessionModel = require("../models/sessionModel");
+const retailerSessionModel = require("../models/retailerSessionModel");
 const bycrypt = require("bcryptjs");
 const retailerModel = require("../models/retailerModel");
 
@@ -28,6 +28,12 @@ const retailerControler = {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    const isTaken = await retailerModel.isEmailTaken(email);
+
+    if (isTaken) {
+      return res.status(400).json({ message: "Email is already taken" });
     }
 
     // Validate KRA pin (11 characters: 'P' or 'A', 0, 8 digits, and 1 alphanumeric character)
@@ -68,7 +74,7 @@ const retailerControler = {
         retailer_id: retailerId,
       });
     } catch (error) {
-      console.error("Error registering retailer:", error);
+      console.error("Error registering retailer:", error.message);
 
       res.status(500).json({
         message: "Error registering retailer. Please try again later.",
@@ -109,7 +115,7 @@ const retailerControler = {
 
       // session expiration time
       // req.session.cookie.expires = new Date(Date.now() + 3600000); // for 1 hour
-      const sessionToken = await sessionModel.createSession(
+      const sessionToken = await retailerSessionModel.createSession(
         retailer.retailer_id
       );
 
@@ -130,11 +136,17 @@ const retailerControler = {
   },
 
   updateProfile: async (req, res) => {
-    const { name, county, building, phone } = req.body;
+    const { name, email, county, building, phone } = req.body;
 
-    console.log(name, county, building, phone);
+    console.log(name, email, county, building, phone);
 
     // const retailerId = req.session.retailer?.id;
+
+    const isTaken = await retailerModel.isEmailTaken(email);
+
+    if (isTaken) {
+      return res.status(400).json({ message: "Email is already taken" });
+    }
 
     // console.log(retailerId);
     const sessionToken = req.headers["authorization"]?.split(" ")[1];
@@ -146,7 +158,7 @@ const retailerControler = {
     }
 
     try {
-      const sessionData = await sessionModel.getSession(sessionToken);
+      const sessionData = await retailerSessionModel.getSession(sessionToken);
 
       if (!sessionData) {
         return res
@@ -214,7 +226,7 @@ const retailerControler = {
     }
 
     try {
-      const result = await sessionModel.deleteSession(sessionToken);
+      const result = await retailerSessionModel.deleteSession(sessionToken);
 
       if (result) {
         return res.status(200).json({ message: "Logout successful." });
@@ -226,6 +238,39 @@ const retailerControler = {
     } catch (error) {
       console.error("Error logging out:", err);
       return res.status(500).json({ message: "Internal server error." });
+    }
+  },
+
+  // to be used by admins
+  getAllRetailers: async (req, res) => {
+    try {
+      const retailers = await retailerModel.getAllRetailers();
+
+      return res.status(200).json({
+        message: "Retailers fetched successfully",
+        data: retailers,
+      });
+    } catch (error) {
+      console.error("Error fetching retailers:", error.message);
+      return res.status(500).json({
+        message: "Error fetching retailers. Please try again later.",
+      });
+    }
+  },
+
+  deleteRetailer: async (req, res) => {
+    const { retailerId } = req.params;
+
+    try {
+      const result = await retailerModel.deleteRetailer(retailerId);
+      return res
+        .status(200)
+        .json({ message: "Retailer Deleted successuly.", result: result });
+    } catch (error) {
+      console.error("Error Deleting Retailer:", error.message);
+      return res.status(500).json({
+        message: "Failed to delete Retailer Please. Try again later.",
+      });
     }
   },
 };

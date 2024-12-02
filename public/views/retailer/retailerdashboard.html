@@ -12,15 +12,23 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="/public/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
   </head>
   <body>
     <div class="sidebar">
       <h2>Menu</h2>
       <a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-      <a href="#"><i class="fas fa-barcode"></i>Pending Verifications</a>
 
-      <a href="#"><i class="fas fa-user-shield"></i>Settings</a>
+      <a href="/views/retailer/adddeviceretailer.html"
+        ><i class="fas fa-store"></i>Add Retailer</a
+      >
+      <a href="/views/retailer/retailerpendingverification.html"
+        ><i class="fas fa-barcode"></i>Pending Verifications</a
+      >
+
+      <a href="/views/retailer/retailerpendingverification.html"
+        ><i class="fas fa-user-shield"></i>Settings</a
+      >
     </div>
 
     <div class="main-content">
@@ -87,7 +95,7 @@
             <td>24 Months</td>
             <td>Active</td>
             <td class="actions">
-              <a href="#">Edit</a>
+              <a href="/views/retailer/editdeclarations.html">Edit</a>
               <a href="#">Delete</a>
             </td>
           </tr>
@@ -100,7 +108,7 @@
             <td>12 Months</td>
             <td>Active</td>
             <td class="actions">
-              <a href="#">Edit</a>
+              <a href="/views/retailer/editdeclarations.html">Edit</a>
               <a href="#">Delete</a>
             </td>
           </tr>
@@ -113,7 +121,7 @@
             <td>18 Months</td>
             <td>Active</td>
             <td class="actions">
-              <a href="#">Edit</a>
+              <a href="/views/retailer/editdeclarations.html">Edit</a>
               <a href="#">Delete</a>
             </td>
           </tr>

@@ -12,6 +12,8 @@ router.put(
   authMiddleware.retailerAuth,
   retailerController.updateProfile
 );
+
+router.get("/allretailers", retailerController.getAllRetailers);
 router.post("/logout", authMiddleware.retailerAuth, retailerController.logout);
 
 module.exports = router;

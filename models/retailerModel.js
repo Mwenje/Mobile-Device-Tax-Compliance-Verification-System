@@ -7,9 +7,14 @@ const retailerModel = {
         `SELECT * FROM retailer WHERE email = ?`,
         [email]
       );
+
+      if (rows.length === 0) {
+        throw new Error("Retailer not found");
+      }
+
       return rows[0];
     } catch (error) {
-      console.error("Error retrieving retailer by email:", error);
+      console.error("Error retrieving retailer by email:", error.message);
       throw new Error("Failed to retrieve retailer");
     }
   },
@@ -68,6 +73,52 @@ const retailerModel = {
     } catch (error) {
       console.error("Error updating retailer profile:", error);
       throw new Error("Failed to update retailer profile");
+    }
+  },
+
+  //to be used by the admins
+
+  deleteRetailer: async (retailerId) => {
+    try {
+      const [result] = await pool.execute(
+        `DELETE FROM retailer WHERE retailer_id = ?`,
+        [retailerId]
+      );
+
+      if (result.affectedRows === 0) {
+        throw new Error(`No retailer found with ID ${retailerId}`);
+      }
+
+      return {
+        success: true,
+        message: "Retailer deleted successfully",
+      };
+    } catch (error) {
+      console.error("Error deleting retailer:", error.message);
+      throw new Error("Failed to delete retailer");
+    }
+  },
+
+  getAllRetailers: async () => {
+    try {
+      const [rows] = await pool.execute(`SELECT * FROM retailer`);
+      return rows;
+    } catch (error) {
+      console.error("Error retrieving all retailers:", error.message);
+      throw new Error("Failed to retrieve all retailers");
+    }
+  },
+
+  isEmailTaken: async (email) => {
+    try {
+      const [rows] = await pool.execute(
+        `SELECT * FROM retailer WHERE email = ?`,
+        [email]
+      );
+      return rows.length > 0;
+    } catch (error) {
+      console.error("Error checking if email is taken:", error.message);
+      throw new Error("Failed to check email availability");
     }
   },
 };

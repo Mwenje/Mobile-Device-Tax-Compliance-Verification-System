@@ -1,4 +1,4 @@
-const sessionModel = require("../models/sessionModel");
+const retailerSessionModel = require("../models/retailerSessionModel");
 
 const authMiddleware = {
   retailerAuth: async (req, res, next) => {
@@ -19,7 +19,7 @@ const authMiddleware = {
     }
 
     try {
-      const sessionData = await sessionModel.getSession(sessionToken);
+      const sessionData = await retailerSessionModel.getSession(sessionToken);
 
       console.log(sessionData);
 
