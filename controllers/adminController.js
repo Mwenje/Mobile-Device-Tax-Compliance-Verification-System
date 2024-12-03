@@ -1,5 +1,6 @@
 const adminModel = require("../models/adminModel");
 const bycrypt = require("bcryptjs");
+const adminSessionModel = require("../models/adminSessionModel");
 
 const adminController = {
   createAdmin: async (req, res) => {
@@ -72,11 +73,16 @@ const adminController = {
         return res.status(401).json({ message: "Invalid credentials." });
       }
 
+      const sessionToken = await adminSessionModel.createSession(
+        admin.admin_id
+      );
+
       return res.status(200).json({
         message: "Login successful.",
         admin_id: admin.admin_id,
         name: admin.name,
         email: admin.email,
+        sessionToken: sessionToken,
       });
     } catch (error) {
       console.error("Error logging in:", error.message);
@@ -90,13 +96,38 @@ const adminController = {
   updateAdminProfile: async (req, res) => {
     const { adminId, name, email, newpassword } = req.body;
 
+    const sessionToken = req.headers["authorization"]?.split(" ")[1];
+
+    if (!sessionToken) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. No session token provided." });
+    }
+
     try {
+      const sessionData = await adminSessionModel.getSession(sessionToken);
+
+      if (!sessionData) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized. Invalid or expired session token." });
+      }
+
+      const adminId = sessionData.admin_id;
+
       let hashedPassword = null;
+
       if (newpassword) {
         hashedPassword = await bycrypt.hash(newpassword, 10);
       }
 
       console.log(adminId, name, email, hashedPassword);
+
+      const isTaken = await adminModel.isEmailTaken(email);
+
+      if (isTaken) {
+        return res.status(400).json({ message: "Email is already taken" });
+      }
 
       await adminModel.updateAdminProfile(adminId, name, email);
 
@@ -115,12 +146,40 @@ const adminController = {
 
   deleteAdmin: async (req, res) => {
     const { adminId } = req.params;
+    const sessionToken = req.headers["authorization"]?.split(" ")[1];
+
+    if (!sessionToken) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. No session token provided." });
+    }
 
     try {
+      const sessionData = await adminSessionModel.getSession(sessionToken);
+
+      console.log(sessionData);
+
+      if (!sessionData) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized. Invalid or expired session token." });
+      }
+
+      const loggedInAdminId = sessionData.admin_id;
+
+      console.log(loggedInAdminId, adminId);
+
+      if (loggedInAdminId !== adminId) {
+        return res.status(403).json({
+          message: "Forbidden. You don't have permission to delete this admin.",
+        });
+      }
+
       const result = await adminModel.deleteAdmin(adminId);
+
       return res
         .status(200)
-        .json({ message: "Admin Deleted successuly.", result: result });
+        .json({ message: "Admin Deleted successfully.", result: result });
     } catch (error) {
       console.error("Error Deleting Admin:", error.message);
       return res

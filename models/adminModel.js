@@ -60,7 +60,9 @@ const adminModel = {
       );
 
       if (result.affectedRows === 0) {
-        throw new Error(`No admin found with ID ${adminId}`);
+        throw new Error(
+          `No admin found with ID ${adminId} or or already deleted.`
+        );
       }
 
       return {
@@ -78,6 +80,7 @@ const adminModel = {
       const [rows] = await pool.execute(`SELECT * FROM admin WHERE email = ?`, [
         email,
       ]);
+
       return rows.length > 0;
     } catch (error) {
       console.error(`Error checking if email is taken: ${error.message}`);

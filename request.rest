@@ -30,7 +30,7 @@ POST http://localhost:3000/api/v1/admin/login
 Content-Type: application/json
 
 {
-  "email": "techworld@example.com",
+  "email": "admin@imei-system.com",
   "password": "securepassword@123"
 }
 
@@ -40,23 +40,26 @@ GET http://localhost:3000/api/v1/retailer/allretailers
 ###
 POST http://localhost:3000/api/v1/admin/create
 Content-Type: application/json
+Authorization: Bearer 119d252c196ec6128a7ea6121cfe4dddd4363741ecabea46aab752b21b7dd266
 
 {
-  "name": "John Doe",
-  "email": "techworld@example.com",
+  "name": "Super Admin",
+  "email": "admin@imei-system.com",
   "password": "securepassword@123"
 }
 
 ###
 PUT http://localhost:3000/api/v1/admin/profile
 Content-Type: application/json
+Authorization: Bearer 119d252c196ec6128a7ea6121cfe4dddd4363741ecabea46aab752b21b7dd266
 
 {
   "name": "John Doe",
-  "email": "techworld@example.com",
+  "email": "techworld1@example.com",
   "newpassword": "securepassword@123"
 }
 
 ###
-DELETE http://localhost:3000/api/v1/admin//delete/3
+DELETE http://localhost:3000/api/v1/admin/delete/3
 Content-Type: application/json
+Authorization: Bearer 6b6f91972cd5bc806e41827fcba740e75336ce76386df17f9d3cda2bc193e428b
