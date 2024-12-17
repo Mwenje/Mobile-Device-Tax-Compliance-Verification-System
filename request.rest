@@ -63,3 +63,12 @@ Authorization: Bearer 119d252c196ec6128a7ea6121cfe4dddd4363741ecabea46aab752b21b
 DELETE http://localhost:3000/api/v1/admin/delete/3
 Content-Type: application/json
 Authorization: Bearer 6b6f91972cd5bc806e41827fcba740e75336ce76386df17f9d3cda2bc193e428b
+
+####retailer requests
+POST http://localhost:3000/api/v1/declarations
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "securepassword@123"
+}

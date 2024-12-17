@@ -6,6 +6,7 @@ const retailerRoutes = require("./routes/retailerRoutes");
 
 const adminRoutes = require("./routes/adminRoutes");
 
+const declarationRoutes = require("./routes/declarationRoutes");
 // const { retailerAuth } = require("./middlewares/auth");
 
 // Load environment variables from .env file
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/v1/retailer", retailerRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/declarations", declarationRoutes);
 
 // Route to serve the main HTML file
 app.get("/", (req, res) => {
