@@ -65,10 +65,6 @@ Content-Type: application/json
 Authorization: Bearer 6b6f91972cd5bc806e41827fcba740e75336ce76386df17f9d3cda2bc193e428b
 
 ####retailer requests
-POST http://localhost:3000/api/v1/declarations
+POST http://localhost:3000/api/v1/declarations/admin/declarations
 Content-Type: application/json
-
-{
-  "email": "johndoe@example.com",
-  "password": "securepassword@123"
-}
+Authorization: Bearer bf1b7daf6d63dbeab7cfdbc086b816f159f21ef4ddc3b925b8580e953363efbb

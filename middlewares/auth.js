@@ -1,6 +1,29 @@
 const retailerSessionModel = require("../models/retailerSessionModel");
 const adminSessionModel = require("../models/adminSessionModel");
 
+const verifySession = async (sessionToken, sessionModel, sessionType) => {
+  if (!sessionToken) {
+    throw new Error("Session token format is invalid.");
+  }
+
+  const sessionData = await sessionModel.getSession(sessionToken);
+
+  if (!sessionData) {
+    console.error(`${sessionType} session not found for token:`, sessionToken);
+    throw new Error("Unauthorized. Invalid or expired session token.");
+  }
+
+  const sessionExpiryTime = new Date(sessionData.expires_at).getTime();
+  const currentTime = new Date().getTime();
+
+  if (sessionExpiryTime < currentTime) {
+    console.error(`${sessionType} session expired for token:`, sessionToken);
+    throw new Error("Unauthorized. Invalid or expired session token.");
+  }
+
+  return sessionData;
+};
+
 const authMiddleware = {
   retailerAuth: async (req, res, next) => {
     const authorizationHeader = req.headers["authorization"];
@@ -13,46 +36,18 @@ const authMiddleware = {
 
     const sessionToken = authorizationHeader.split(" ")[1];
 
-    if (!sessionToken) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized. Session token format is invalid." });
-    }
-
     try {
-      const sessionData = await retailerSessionModel.getSession(sessionToken);
-
-      console.log(sessionData);
-
-      if (!sessionData) {
-        console.log("Session not found for token:", sessionToken);
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. Invalid or expired session token." });
-      }
-
-      console.log("Session Data:", sessionData);
-      console.log("Session Expiry:", sessionData.expires_at);
-      console.log("Current Time:", new Date());
-
-      const sessionExpiryTime = new Date(sessionData.expires_at).getTime();
-      const currentTime = new Date().getTime();
-
-      console.log("Session Expiry Time:", sessionExpiryTime);
-      console.log("Current Time:", currentTime);
-
-      if (sessionExpiryTime < currentTime) {
-        console.log("Session expired");
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. Invalid or expired session token." });
-      }
+      const sessionData = await verifySession(
+        sessionToken,
+        retailerSessionModel,
+        "Retailer"
+      );
 
       req.retailerId = sessionData.retailer_id;
 
       next();
     } catch (err) {
-      console.error("Error verifying session:", err);
+      console.error("Retailer Auth Error:", error.message);
       res.status(500).json({ message: "Internal server error." });
     }
     // if (req.session && req.session.retailer) {
@@ -67,44 +62,19 @@ const authMiddleware = {
   adminAuth: async (req, res, next) => {
     const authorizationHeader = req.headers["authorization"];
 
-    if (!authorizationHeader) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized. No session token provided." });
-    }
-
     const sessionToken = authorizationHeader.split(" ")[1];
 
-    if (!sessionToken) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized. Session token format is invalid." });
-    }
-
     try {
-      const sessionData = await adminSessionModel.getSession(sessionToken);
-
-      if (!sessionData) {
-        console.log("Session not found for token:", sessionToken);
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. Invalid or expired session token." });
-      }
-
-      const sessionExpiryTime = new Date(sessionData.expires_at).getTime();
-      const currentTime = new Date().getTime();
-
-      if (sessionExpiryTime < currentTime) {
-        console.log("Session expired");
-        return res
-          .status(401)
-          .json({ message: "Unauthorized. Invalid or expired session token." });
-      }
+      const sessionData = await verifySession(
+        sessionToken,
+        adminSessionModel,
+        "Admin"
+      );
 
       req.adminId = sessionData.admin_id;
       next();
     } catch (error) {
-      console.error("Error verifying session:", error.message);
+      console.error("Admin Auth Error:", error.message);
       res.status(500).json({ message: "Internal server error." });
     }
   },
